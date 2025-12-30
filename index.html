@@ -13,19 +13,13 @@
             --sv-gold: #f7d51d;
         }
 
-        * {
-            box-sizing: border-box;
-        }
-
         body {
-            /* Animated Waterfall GIF Background */
             background-image: url('https://i.pinimg.com/originals/25/6a/71/256a719da8521be28a95f602925c5aff.gif');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             background-repeat: no-repeat;
-            background-color: #469b32; /* Green fallback so no grey shows */
-            
+            background-color: #469b32; 
             font-family: 'Press Start 2P', cursive;
             display: flex;
             justify-content: center;
@@ -36,7 +30,6 @@
             color: #3e1b00;
         }
 
-        /* Subtle darkening overlay */
         body::before {
             content: '';
             position: absolute;
@@ -77,21 +70,8 @@
             transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        #yesBtn {
-            background: #469b32;
-            color: white;
-            z-index: 100;
-            left: 50%;
-            transform: translateX(-110%);
-        }
-
-        #noBtn {
-            background: #b33d26;
-            color: white;
-            z-index: 10;
-            left: 50%;
-            transform: translateX(10%);
-        }
+        #yesBtn { background: #469b32; color: white; z-index: 100; left: 50%; transform: translateX(-110%); }
+        #noBtn { background: #b33d26; color: white; z-index: 10; left: 50%; transform: translateX(10%); }
 
         .hidden { display: none !important; }
 
@@ -105,7 +85,19 @@
             color: #4a2c10;
         }
 
-        @keyframes spin { from {transform: rotate(0deg);} to {transform: rotate(360deg);} }
+        /* Custom Pixel Heart Loader */
+        .pixel-heart {
+            font-size: 40px;
+            display: inline-block;
+            animation: pulse 0.8s infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 <body>
@@ -113,7 +105,6 @@
     <div id="screen1" class="game-container">
         <div style="font-size: 45px; margin-bottom: 15px;">✉️</div>
         <h1 id="mainQuestion">There's a new message for you,<br>do you want to open?</h1>
-        
         <div class="button-wrapper">
             <button id="yesBtn" class="pixel-btn" onclick="startLoading()">Yes, i'd love to</button>
             <button id="noBtn" class="pixel-btn" onclick="handleNo()">No thanks, im good</button>
@@ -121,8 +112,9 @@
     </div>
 
     <div id="loadingScreen" class="game-container hidden">
-        <div style="width: 40px; height: 40px; border: 4px solid #fff; border-top: 4px solid var(--sv-gold); animation: spin 0.8s infinite linear; margin: auto;"></div>
+        <div class="pixel-heart">❤️</div>
         <p style="margin-top: 15px; font-size: 10px;">READING SECRET NOTE...</p>
+        <p style="font-size: 7px; color: var(--sv-brown);">DO NOT CLOSE</p>
     </div>
 
     <div id="screen2" class="game-container hidden">
@@ -151,18 +143,14 @@
                 const noBtn = document.getElementById('noBtn');
 
                 let reallyText = "";
-                for(let i = 0; i < reallyCount; i++) {
-                    reallyText += "really ";
-                }
+                for(let i = 0; i < reallyCount; i++) { reallyText += "really "; }
                 mainQ.innerText = `Are you ${reallyText}sure?`;
 
                 scale += 1.8; 
                 yesBtn.style.left = "50%";
                 yesBtn.style.transform = `translateX(-50%) scale(${scale})`;
-                
                 noBtn.style.opacity = Math.max(0, 1 - (reallyCount * 0.2));
             }
-
             if (reallyCount >= 5) {
                 document.getElementById('noBtn').style.display = "none";
             }
@@ -174,7 +162,7 @@
             setTimeout(() => {
                 document.getElementById('loadingScreen').classList.add('hidden');
                 document.getElementById('screen2').classList.remove('hidden');
-            }, 1800);
+            }, 2000);
         }
     </script>
 </body>
