@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Message For Noa</title>
+    <title>A Message For Noa</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root {
-            --flappy-sky: #70c5ce;
             --sv-tan: #e8b059;
             --sv-border: #5a3015;
             --sv-gold: #f7d51d;
+            --sv-brown: #864c24;
         }
 
         body {
-            background-color: var(--flappy-sky);
+            /* Scenic Pixel Background */
+            background: url('https://wallpaperaccess.com/full/1162464.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             font-family: 'Press Start 2P', cursive;
             display: flex;
             justify-content: center;
@@ -25,32 +29,21 @@
             color: #3e1b00;
         }
 
-        /* Flappy Bird Animation */
-        .background-elements {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            pointer-events: none;
+        /* Semi-transparent overlay to help the box pop */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 1;
         }
 
-        .bird {
-            display: inline-block;
-            font-size: 40px;
-            animation: flap 0.4s step-end infinite;
-        }
-
-        @keyframes flap {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
-        }
-
-        /* Container */
         .game-container {
             position: relative;
             background-color: var(--sv-tan);
             border: 6px solid var(--sv-border);
             padding: 40px 20px;
-            box-shadow: 10px 10px 0px rgba(0,0,0,0.2);
+            box-shadow: inset -6px -6px 0px #c6893f, inset 6px 6px 0px #ffdb9a, 10px 10px 20px rgba(0,0,0,0.5);
             width: 85%;
             max-width: 550px;
             text-align: center;
@@ -95,10 +88,11 @@
 
         .hidden { display: none !important; }
 
+        /* The Secret Note with Brown Border */
         .secret-note {
             background: #fff6d5;
             padding: 25px;
-            border: 4px solid #ff74a4; /* Distinct border to confirm update */
+            border: 4px dashed var(--sv-brown); 
             text-align: center;
             font-size: 9px;
             line-height: 2.2;
@@ -110,12 +104,6 @@
 </head>
 <body>
 
-    <div class="background-elements">
-        <marquee scrollamount="6" style="position:absolute; top:15%; width:100%;"><span class="bird">🐤</span></marquee>
-        <marquee scrollamount="4" style="position:absolute; top:40%; width:100%;"><span class="bird">🐤</span></marquee>
-        <marquee scrollamount="8" direction="right" style="position:absolute; top:65%; width:100%;"><span class="bird" style="transform: scaleX(-1);">🐤</span></marquee>
-    </div>
-
     <div id="screen1" class="game-container">
         <div style="font-size: 50px; margin-bottom: 20px;">✉️</div>
         <h1 id="mainQuestion">There's a new message for you,<br>do you want to open?</h1>
@@ -126,9 +114,9 @@
         </div>
     </div>
 
-    <div id="loadingScreen" class="hidden" style="text-align: center; color: white;">
+    <div id="loadingScreen" class="game-container hidden">
         <div style="width: 40px; height: 40px; border: 4px solid #fff; border-top: 4px solid var(--sv-gold); animation: spin 0.8s infinite linear; margin: auto;"></div>
-        <p style="margin-top: 15px;">OPENING...</p>
+        <p style="margin-top: 15px; font-size: 10px;">OPENING...</p>
     </div>
 
     <div id="screen2" class="game-container hidden">
@@ -162,7 +150,7 @@
                 }
                 mainQ.innerText = `Are you ${reallyText}sure?`;
 
-                scale += 1.5;
+                scale += 1.6;
                 yesBtn.style.left = "50%";
                 yesBtn.style.transform = `translateX(-50%) scale(${scale})`;
                 
