@@ -11,12 +11,14 @@
             --sv-border: #5a3015;
             --sv-brown: #864c24;
             --sv-gold: #f7d51d;
-            --sky-blue: #70c5ce;
         }
 
         body {
-            /* Using a gradient instead of an external image to ensure it works every time */
-            background: linear-gradient(to bottom, #4a90e2 0%, #70c5ce 70%, #2d5a27 70%, #469b32 100%);
+            /* High-quality pixel art landscape */
+            background: url('https://wallpaperaccess.com/full/3591275.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             font-family: 'Press Start 2P', cursive;
             display: flex;
             justify-content: center;
@@ -24,34 +26,38 @@
             height: 100vh;
             margin: 0;
             overflow: hidden;
+            color: #3e1b00;
+        }
+
+        /* Overlay to make the content box stand out against the background */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.25);
+            z-index: 1;
         }
 
         .game-container {
             position: relative;
             background-color: var(--sv-tan);
             border: 6px solid var(--sv-border);
-            padding: 30px 20px;
-            box-shadow: 8px 8px 0px rgba(0,0,0,0.3);
+            padding: 40px 20px;
+            box-shadow: inset -6px -6px 0px #c6893f, inset 6px 6px 0px #ffdb9a, 10px 10px 30px rgba(0,0,0,0.5);
             width: 85%;
-            max-width: 500px;
+            max-width: 550px;
             text-align: center;
             z-index: 10;
         }
 
-        h1 { 
-            font-size: 10px; 
-            line-height: 2; 
-            margin-bottom: 20px; 
-            color: #3e1b00;
-            min-height: 80px;
-        }
+        h1 { font-size: 10px; line-height: 2; margin-bottom: 40px; min-height: 90px; }
 
         .button-wrapper {
             position: relative;
-            height: 140px; /* Space for the Yes button to grow */
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 130px;
         }
 
         .pixel-btn {
@@ -61,7 +67,7 @@
             border: 4px solid var(--sv-border);
             cursor: pointer;
             position: absolute;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s;
+            transition: all 0.2s ease-in-out;
         }
 
         #yesBtn {
@@ -69,36 +75,45 @@
             color: white;
             z-index: 100;
             left: 50%;
-            transform: translateX(-110%); /* Neat left start */
+            transform: translateX(-110%);
         }
 
         #noBtn {
             background: #b33d26;
             color: white;
-            z-index: 50;
+            z-index: 10;
             left: 50%;
-            transform: translateX(10%); /* Neat right start */
+            transform: translateX(10%);
         }
 
         .hidden { display: none !important; }
 
+        /* The Secret Note with Brown Dashed Border */
         .secret-note {
             background: #fff6d5;
-            padding: 20px;
-            border: 4px dashed var(--sv-brown);
+            padding: 25px;
+            border: 4px dashed var(--sv-brown); 
+            text-align: center;
             font-size: 9px;
             line-height: 2.2;
             color: #4a2c10;
-            text-align: center;
         }
 
+        .pixel-loader {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #fff;
+            border-top: 4px solid var(--sv-gold);
+            animation: spin 0.8s infinite linear;
+            margin: auto;
+        }
         @keyframes spin { from {transform: rotate(0deg);} to {transform: rotate(360deg);} }
     </style>
 </head>
 <body>
 
     <div id="screen1" class="game-container">
-        <div style="font-size: 40px; margin-bottom: 10px;">✉️</div>
+        <div style="font-size: 50px; margin-bottom: 20px;">✉️</div>
         <h1 id="mainQuestion">There's a new message for you,<br>do you want to open?</h1>
         
         <div class="button-wrapper">
@@ -108,8 +123,8 @@
     </div>
 
     <div id="loadingScreen" class="game-container hidden">
-        <div style="width: 40px; height: 40px; border: 4px solid #fff; border-top: 4px solid var(--sv-gold); animation: spin 0.8s infinite linear; margin: auto;"></div>
-        <p style="margin-top: 15px; font-size: 10px;">READING NOTE...</p>
+        <div class="pixel-loader"></div>
+        <p style="margin-top: 15px; font-size: 10px;">READING SECRET NOTE...</p>
     </div>
 
     <div id="screen2" class="game-container hidden">
@@ -121,38 +136,39 @@
             <p>I WISH NEXT YEAR WILL BE MUCH BETTER YEAR THAN BEFORE, MAY YOU GET BETTER RESULTS IN YOUR STUDY, MAY YOU GET BETTER EXPERIENCE IN YOUR WORK, AND MAY THE RIGHT PEOPLE STILL STAY BY YOUR SIDE.</p>
             <p>I LOVE YOU MORE THAN WORDS CAN CAPTURE.</p>
             <p>HAPPY NEW YEAR !</p>
-            <div style="color: #b33d26; font-size: 24px; margin-top: 10px;">❤️</div>
-            <div style="margin-top: 15px; font-size: 8px; color: #864c24;">- From: inori</div>
+            <div style="color: #b33d26; font-size: 30px; margin-top: 15px;">❤️</div>
+            <div style="margin-top: 20px; font-size: 8px; color: #864c24;">- From: inori</div>
         </div>
     </div>
 
     <script>
-        let noClicks = 0;
-        let yesScale = 1;
+        let scale = 1;
+        let reallyCount = 0;
 
         function handleNo() {
-            if (noClicks < 5) {
-                noClicks++;
+            if (reallyCount < 5) {
+                reallyCount++;
                 const mainQ = document.getElementById('mainQuestion');
                 const yesBtn = document.getElementById('yesBtn');
                 const noBtn = document.getElementById('noBtn');
 
-                // Add "really" text
-                let reallys = "";
-                for(let i=0; i<noClicks; i++) { reallys += "really "; }
-                mainQ.innerText = `Are you ${reallys}sure?`;
-
-                // Grow Yes button and center it
-                yesScale += 1.6;
-                yesBtn.style.left = "50%";
-                yesBtn.style.transform = `translateX(-50%) scale(${yesScale})`;
-
-                // Fade out No button
-                noBtn.style.opacity = (1 - (noClicks * 0.2));
-                
-                if (noClicks === 5) {
-                    noBtn.style.display = "none";
+                let reallyText = "";
+                for(let i = 0; i < reallyCount; i++) {
+                    reallyText += "really ";
                 }
+                mainQ.innerText = `Are you ${reallyText}sure?`;
+
+                // Grow Yes button and move it towards center
+                scale += 1.7;
+                yesBtn.style.left = "50%";
+                yesBtn.style.transform = `translateX(-50%) scale(${scale})`;
+                
+                // Gradually cover/hide No button
+                noBtn.style.opacity = Math.max(0, 1 - (reallyCount * 0.2));
+            }
+
+            if (reallyCount >= 5) {
+                document.getElementById('noBtn').style.display = "none";
             }
         }
 
@@ -160,10 +176,11 @@
             document.getElementById('screen1').classList.add('hidden');
             document.getElementById('loadingScreen').classList.remove('hidden');
             
+            // 2 second loading delay
             setTimeout(() => {
                 document.getElementById('loadingScreen').classList.add('hidden');
                 document.getElementById('screen2').classList.remove('hidden');
-            }, 1500);
+            }, 2000);
         }
     </script>
 </body>
