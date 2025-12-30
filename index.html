@@ -176,11 +176,14 @@
   <source src="BGbejir.mp3" type="audio/mpeg">
 </audio>
 <script>
-document.addEventListener('click', () => {
-  const music = document.getElementById('bgMusic');
-  music.volume = 1;
-  music.play();
-}, { once: true });
+if (!localStorage.getItem("loggedIn")) {
+  window.location.href = "login.html";
+}
+
+const music = document.getElementById("bgMusic");
+music.volume = 0.25;
+music.play();
+
 </script>
 </body>
 </html>
