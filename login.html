@@ -1,59 +1,124 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Login</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .login-box {
-      background: #020617;
-      padding: 30px;
-      border-radius: 10px;
-      width: 300px;
-      text-align: center;
-    }
-    input, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-    }
-    button {
-      background: #38bdf8;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stardew Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sv-tan: #e8b059;
+            --sv-border: #5a3015;
+            --sv-brown: #864c24;
+            --sv-gold: #f7d51d;
+        }
+
+        body {
+            /* Same Animated Waterfall Background */
+            background-image: url('https://i.pinimg.com/originals/25/6a/71/256a719da8521be28a95f602925c5aff.gif');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-color: #469b32;
+            
+            font-family: 'Press Start 2P', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            color: #3e1b00;
+        }
+
+        /* Subtle overlay to match index.html */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: 1;
+        }
+
+        .login-box {
+            position: relative;
+            background-color: var(--sv-tan);
+            border: 6px solid var(--sv-border);
+            padding: 40px 25px;
+            box-shadow: inset -6px -6px 0px #c6893f, inset 6px 6px 0px #ffdb9a, 10px 10px 25px rgba(0,0,0,0.4);
+            width: 90%;
+            max-width: 350px;
+            text-align: center;
+            z-index: 10;
+        }
+
+        h2 {
+            font-size: 16px;
+            margin-bottom: 30px;
+            color: #3e1b00;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 8px;
+            border: 4px solid var(--sv-border);
+            background-color: #fff6d5;
+            outline: none;
+            color: var(--sv-brown);
+        }
+
+        input::placeholder {
+            color: #c6893f;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 25px;
+            background: #469b32; /* Stardew Green */
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            border: 4px solid var(--sv-border);
+            cursor: pointer;
+            box-shadow: 0 4px 0 var(--sv-border);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        button:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 var(--sv-border);
+        }
+
+        button:hover {
+            background-color: #55b53e;
+        }
+    </style>
 </head>
 <body>
 
 <div class="login-box">
-  <h2>Login</h2>
-  <input type="text" id="username" placeholder="Username">
-  <input type="password" id="password" placeholder="Password">
-  <button onclick="login()">Login</button>
+    <h2>Identify Yourself</h2>
+    <input type="text" id="username" placeholder="USERNAME">
+    <input type="password" id="password" placeholder="PASSWORD">
+    <button onclick="login()">ENTER FARM</button>
 </div>
 
 <script>
 function login() {
-  const user = document.getElementById("username").value;
-  const pass = document.getElementById("password").value;
+    const user = document.getElementById("username").value;
+    const pass = document.getElementById("password").value;
 
-  // LOGIN SEDERHANA (DEMO)
-  if (user === "admin" && pass === "123") {
-    localStorage.setItem("loggedIn", "true");
-    window.location.href = "index.html";
-  } else {
-    alert("Username atau password salah");
-  }
+    if (user === "admin" && pass === "123") {
+        localStorage.setItem("loggedIn", "true");
+        window.location.href = "index.html";
+    } else {
+        alert("Incorrect Username or Password!");
+    }
 }
 </script>
 
