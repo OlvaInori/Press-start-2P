@@ -110,14 +110,14 @@ function login() {
     const pass = document.getElementById("password").value;
 
     if (user === "admin" && pass === "123") {
-        localStorage.setItem("loggedIn", "true");
+        sessionStorage.setItem("loggedIn", "true");
         // Navigates to index.html in the same folder
         window.location.href = "index.html";
     } else {
         alert("Incorrect identity!");
     }
 }
-</script>
+</script>ww
 
 </body>
 </html>
