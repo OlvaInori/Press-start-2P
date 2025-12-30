@@ -193,5 +193,10 @@ function logout() {
   window.location.href = "login.html";
 }
 </script>
+<script>
+if (!sessionStorage.getItem("loggedIn")) {
+  window.location.href = "login.html";
+}
+</script>
 </body>
 </html>
