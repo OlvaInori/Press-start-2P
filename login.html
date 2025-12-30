@@ -101,7 +101,7 @@
     <h2>LOGIN</h2>
     <input type="text" id="username" placeholder="USERNAME">
     <input type="password" id="password" placeholder="PASSWORD">
-    <button onclick="login()">ENTER FARM</button>
+    <button onclick="login()">ENTER</button>
 </div>
 
 <script>
@@ -109,7 +109,7 @@ function login() {
     const user = document.getElementById("username").value;
     const pass = document.getElementById("password").value;
 
-    if (user === "noarex" && pass === "0607") {
+    if (user === "Noarex" && pass === "0607") {
         sessionStorage.setItem("loggedIn", "true");
         // Navigates to index.html in the same folder
         window.location.href = "index.html";
