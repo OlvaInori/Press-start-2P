@@ -185,18 +185,5 @@ music.volume = 0.25;
 music.play();
 
 </script>
-<button onclick="logout()">LOG OUT</button>
-
-<script>
-function logout() {
-  localStorage.removeItem("loggedIn");
-  window.location.href = "login.html";
-}
-</script>
-<script>
-if (!sessionStorage.getItem("loggedIn")) {
-  window.location.href = "login.html";
-}
-</script>
 </body>
 </html>
