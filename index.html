@@ -3,92 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Noa</title>
+    <title>New Message For Noa</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --flappy-sky: #70c5ce;
+            --sv-tan: #e8b059;
+            --sv-border: #5a3015;
+            --sv-gold: #f7d51d;
+        }
+
         body {
-            background-color: #70c5ce; /* Flappy Sky Blue */
+            background-color: var(--flappy-sky);
             font-family: 'Press Start 2P', cursive;
-            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
             overflow: hidden;
+            color: #3e1b00;
         }
 
-        .bg-birds {
+        /* Flappy Bird Animation */
+        .background-elements {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
             pointer-events: none;
         }
 
-        .game-box {
-            background-color: #e8b059;
-            border: 6px solid #5a3015;
-            padding: 30px 20px;
-            width: 85%;
-            max-width: 500px;
-            text-align: center;
+        .bird {
+            display: inline-block;
+            font-size: 40px;
+            animation: flap 0.4s step-end infinite;
+        }
+
+        @keyframes flap {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* Container */
+        .game-container {
+            position: relative;
+            background-color: var(--sv-tan);
+            border: 6px solid var(--sv-border);
+            padding: 40px 20px;
             box-shadow: 10px 10px 0px rgba(0,0,0,0.2);
+            width: 85%;
+            max-width: 550px;
+            text-align: center;
             z-index: 10;
         }
 
-        h1 { font-size: 10px; line-height: 1.8; color: #3e1b00; margin-bottom: 20px; min-height: 90px; }
+        h1 { font-size: 10px; line-height: 2; margin-bottom: 40px; min-height: 100px; }
 
-        .btn-wrap {
+        .button-wrapper {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 140px;
+            height: 120px;
         }
 
         .pixel-btn {
             font-family: 'Press Start 2P', cursive;
             font-size: 9px;
             padding: 15px;
-            border: 4px solid #5a3015;
+            border: 4px solid var(--sv-border);
             cursor: pointer;
             position: absolute;
-            transition: transform 0.2s ease;
+            transition: all 0.2s ease-in-out;
         }
 
-        #yesBtn { background: #469b32; color: white; z-index: 100; left: 50%; transform: translateX(-110%); }
-        #noBtn { background: #b33d26; color: white; z-index: 50; left: 50%; transform: translateX(10%); }
+        #yesBtn {
+            background: #469b32;
+            color: white;
+            z-index: 100;
+            left: 50%;
+            transform: translateX(-110%);
+        }
 
-        /* The Note with a Pink Border so you know it's the NEW code */
-        .secret-note {
-            background: #fff6d5;
-            padding: 20px;
-            border: 5px solid #ff74a4; /* PINK BORDER - LOOK FOR THIS */
-            font-size: 9px;
-            line-height: 2.1;
-            color: #4a2c10;
+        #noBtn {
+            background: #b33d26;
+            color: white;
+            z-index: 10;
+            left: 50%;
+            transform: translateX(10%);
         }
 
         .hidden { display: none !important; }
+
+        .secret-note {
+            background: #fff6d5;
+            padding: 25px;
+            border: 4px solid #ff74a4; /* Distinct border to confirm update */
+            text-align: center;
+            font-size: 9px;
+            line-height: 2.2;
+            color: #4a2c10;
+        }
+
+        @keyframes spin { from {transform: rotate(0deg);} to {transform: rotate(360deg);} }
     </style>
 </head>
 <body>
 
-    <div class="bg-birds">
-        <marquee scrollamount="6" style="position:absolute; top:15%; width:100%;">🐤</marquee>
-        <marquee scrollamount="4" style="position:absolute; top:40%; width:100%;">🐤</marquee>
-        <marquee scrollamount="7" direction="right" style="position:absolute; top:70%; width:100%;">🐤</marquee>
+    <div class="background-elements">
+        <marquee scrollamount="6" style="position:absolute; top:15%; width:100%;"><span class="bird">🐤</span></marquee>
+        <marquee scrollamount="4" style="position:absolute; top:40%; width:100%;"><span class="bird">🐤</span></marquee>
+        <marquee scrollamount="8" direction="right" style="position:absolute; top:65%; width:100%;"><span class="bird" style="transform: scaleX(-1);">🐤</span></marquee>
     </div>
 
-    <div id="screen1" class="game-box">
-        <div style="font-size: 40px; margin-bottom: 10px;">✉️</div>
+    <div id="screen1" class="game-container">
+        <div style="font-size: 50px; margin-bottom: 20px;">✉️</div>
         <h1 id="mainQuestion">There's a new message for you,<br>do you want to open?</h1>
-        <div class="btn-wrap">
-            <button id="yesBtn" class="pixel-btn" onclick="openNote()">Yes, i'd love to</button>
+        
+        <div class="button-wrapper">
+            <button id="yesBtn" class="pixel-btn" onclick="startLoading()">Yes, i'd love to</button>
             <button id="noBtn" class="pixel-btn" onclick="handleNo()">No thanks, im good</button>
         </div>
     </div>
 
-    <div id="screen2" class="game-box hidden">
+    <div id="loadingScreen" class="hidden" style="text-align: center; color: white;">
+        <div style="width: 40px; height: 40px; border: 4px solid #fff; border-top: 4px solid var(--sv-gold); animation: spin 0.8s infinite linear; margin: auto;"></div>
+        <p style="margin-top: 15px;">OPENING...</p>
+    </div>
+
+    <div id="screen2" class="game-container hidden">
         <div class="secret-note">
             <p>HELLO, NOA.</p>
             <p>LOOKING BACK ON THIS YEAR, THERE'S A LOT OF THINGS HAPPENED. UP AND DOWN, HAPPY AND SAD, EACH GIVING US MEMORIES AND EXPERIENCE AT THE SAME TIME.</p>
@@ -97,41 +140,47 @@
             <p>I WISH NEXT YEAR WILL BE MUCH BETTER YEAR THAN BEFORE, MAY YOU GET BETTER RESULTS IN YOUR STUDY, MAY YOU GET BETTER EXPERIENCE IN YOUR WORK, AND MAY THE RIGHT PEOPLE STILL STAY BY YOUR SIDE.</p>
             <p>I LOVE YOU MORE THAN WORDS CAN CAPTURE.</p>
             <p>HAPPY NEW YEAR !</p>
-            <div style="font-size: 24px; margin-top: 10px;">❤️</div>
-            <div style="font-size: 8px; color: #864c24; margin-top: 10px;">- From: inori</div>
+            <div style="color: #b33d26; font-size: 30px; margin-top: 15px;">❤️</div>
+            <div style="margin-top: 20px; font-size: 8px; color: #864c24;">- From: inori</div>
         </div>
     </div>
 
     <script>
-        let noClicks = 0;
-        let yesScale = 1;
+        let scale = 1;
+        let reallyCount = 0;
 
         function handleNo() {
-            if (noClicks < 5) {
-                noClicks++;
+            if (reallyCount < 5) {
+                reallyCount++;
                 const mainQ = document.getElementById('mainQuestion');
                 const yesBtn = document.getElementById('yesBtn');
                 const noBtn = document.getElementById('noBtn');
 
-                let reallys = "";
-                for(let i=0; i<noClicks; i++) { reallys += "really "; }
-                mainQ.innerText = `Are you ${reallys}sure?`;
-
-                yesScale += 1.5;
-                yesBtn.style.left = "50%";
-                yesBtn.style.transform = `translateX(-50%) scale(${yesScale})`;
-
-                noBtn.style.opacity = (1 - (noClicks * 0.2));
-                
-                if (noClicks === 5) {
-                    noBtn.style.display = "none";
+                let reallyText = "";
+                for(let i = 0; i < reallyCount; i++) {
+                    reallyText += "really ";
                 }
+                mainQ.innerText = `Are you ${reallyText}sure?`;
+
+                scale += 1.5;
+                yesBtn.style.left = "50%";
+                yesBtn.style.transform = `translateX(-50%) scale(${scale})`;
+                
+                noBtn.style.opacity = Math.max(0, 1 - (reallyCount * 0.2));
+            }
+
+            if (reallyCount >= 5) {
+                document.getElementById('noBtn').style.display = "none";
             }
         }
 
-        function openNote() {
+        function startLoading() {
             document.getElementById('screen1').classList.add('hidden');
-            document.getElementById('screen2').classList.remove('hidden');
+            document.getElementById('loadingScreen').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+                document.getElementById('screen2').classList.remove('hidden');
+            }, 1500);
         }
     </script>
 </body>
