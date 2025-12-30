@@ -175,5 +175,12 @@
     <audio id="bgMusic" loop>
   <source src="massobeats - rose water (royalty free lofi music).mp3" type="audio/mp3">
 </audio>
+<script>
+document.addEventListener('click', () => {
+  const music = document.getElementById('bgMusic');
+  music.volume = 1;
+  music.play();
+}, { once: true });
+</script>
 </body>
 </html>
