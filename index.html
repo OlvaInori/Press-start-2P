@@ -176,7 +176,7 @@
   <source src="BGbejir.mp3" type="audio/mpeg">
 </audio>
 <script>
-if (!localStorage.getItem("loggedIn")) {
+if (!sessionStorage.getItem("loggedIn")) {
   window.location.href = "login.html";
 }
 
