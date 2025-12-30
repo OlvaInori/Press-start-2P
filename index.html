@@ -14,8 +14,8 @@
         }
 
         body {
-            /* Your specific Pinterest background link */
-            background: url('https://i.pinimg.com/736x/3a/ba/fa/3abafa9bfa8c89c4b3b7914206a866f1.jpg');
+            /* Your new Sunset Stardew Background */
+            background: url('https://i.pinimg.com/1200x/0a/63/ca/0a63caf7f2c17dd4afe816b98b91ffec.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -29,12 +29,12 @@
             color: #3e1b00;
         }
 
-        /* Darkening overlay so the text box is easy to read */
+        /* Subtle overlay to help the text box "pop" */
         body::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.35);
+            background: rgba(0, 0, 0, 0.2);
             z-index: 1;
         }
 
@@ -43,7 +43,7 @@
             background-color: var(--sv-tan);
             border: 6px solid var(--sv-border);
             padding: 35px 20px;
-            box-shadow: inset -6px -6px 0px #c6893f, inset 6px 6px 0px #ffdb9a, 10px 10px 25px rgba(0,0,0,0.6);
+            box-shadow: inset -6px -6px 0px #c6893f, inset 6px 6px 0px #ffdb9a, 10px 10px 25px rgba(0,0,0,0.4);
             width: 85%;
             max-width: 520px;
             text-align: center;
@@ -149,7 +149,7 @@
                 }
                 mainQ.innerText = `Are you ${reallyText}sure?`;
 
-                scale += 1.8; // Grow size
+                scale += 1.8; 
                 yesBtn.style.left = "50%";
                 yesBtn.style.transform = `translateX(-50%) scale(${scale})`;
                 
