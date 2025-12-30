@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Message For You</title>
+    <title>A Message For Noa</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -25,6 +25,7 @@
             color: #3e1b00;
         }
 
+        /* More falling icons */
         .background-elements {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -84,12 +85,14 @@
 
         .secret-note {
             background: #fff6d5;
-            padding: 30px;
+            padding: 25px;
             border: 3px dashed #864c24;
             text-align: center;
-            font-size: 10px;
-            line-height: 2.4;
+            font-size: 9px; /* Slightly smaller to fit the long text */
+            line-height: 2.2;
             color: #4a2c10;
+            max-height: 70vh;
+            overflow-y: auto;
         }
 
         .pixel-loader {
@@ -106,10 +109,14 @@
 <body>
 
     <div class="background-elements">
-        <marquee scrollamount="2" direction="down" style="position:absolute; left:5%; height:100%; font-size: 60px;">🐔</marquee>
-        <marquee scrollamount="4" direction="down" style="position:absolute; left:30%; height:100%; font-size: 60px;">🌻</marquee>
-        <marquee scrollamount="3" direction="down" style="position:absolute; left:65%; height:100%; font-size: 60px;">🍎</marquee>
-        <marquee scrollamount="5" direction="down" style="position:absolute; left:85%; height:100%; font-size: 60px;">🐮</marquee>
+        <marquee scrollamount="2" direction="down" style="position:absolute; left:5%; height:100%; font-size: 40px;">🌸</marquee>
+        <marquee scrollamount="4" direction="down" style="position:absolute; left:15%; height:100%; font-size: 50px;">🍎</marquee>
+        <marquee scrollamount="3" direction="down" style="position:absolute; left:25%; height:100%; font-size: 45px;">🌻</marquee>
+        <marquee scrollamount="5" direction="down" style="position:absolute; left:35%; height:100%; font-size: 55px;">🍇</marquee>
+        <marquee scrollamount="2" direction="down" style="position:absolute; left:50%; height:100%; font-size: 40px;">🌷</marquee>
+        <marquee scrollamount="4" direction="down" style="position:absolute; left:65%; height:100%; font-size: 50px;">🍒</marquee>
+        <marquee scrollamount="3" direction="down" style="position:absolute; left:80%; height:100%; font-size: 45px;">🌼</marquee>
+        <marquee scrollamount="5" direction="down" style="position:absolute; left:92%; height:100%; font-size: 55px;">🍊</marquee>
     </div>
 
     <div id="screen1" class="game-container">
@@ -124,17 +131,20 @@
 
     <div id="loadingScreen" class="hidden" style="text-align: center; color: white;">
         <div class="pixel-loader"></div>
-        <p>OPENING...</p>
+        <p>OPENING FOR NOA...</p>
     </div>
 
     <div id="screen2" class="game-container hidden">
         <div class="secret-note">
-            <p>HELLO MY LOVE, LOOKING BACK ON THIS YEAR, CHOOSING YOU WAS THE MOST BEAUTIFUL DECISION I HAVE EVER MADE.</p>
-            <p>YOU ARE THE HIGHLIGHT OF MY DAYS AND THE PEACE IN MY NIGHTS.</p>
-            <p>AS WE STEP INTO THIS NEW YEAR, MY ONLY WISH IS TO KEEP WALKING THIS PATH BY YOUR SIDE.</p>
-            <p>I LOVE YOU MORE THAN WORDS CAN CAPTURE. HAPPY NEW YEAR!</p>
+            <p>HELLO, NOA.</p>
+            <p>LOOKING BACK ON THIS YEAR, THERE'S A LOT OF THINGS HAPPENED. UP AND DOWN, HAPPY AND SAD, EACH GIVING US MEMORIES AND EXPERIENCE AT THE SAME TIME.</p>
+            <p>BUT FOR ME, HAVING YOU IS THE BEST MEMORIES AND EXPERIENCE I HAVE EVER MADE.</p>
+            <p>AS WE STEP INTO NEW YEAR, MY ONLY WISH IS TO KEEP WALKING THIS PATH WITH YOU BY MY SIDE.</p>
+            <p>I WISH NEXT YEAR WILL BE MUCH BETTER YEAR THAN BEFORE, MAY YOU GET BETTER RESULTS IN YOUR STUDY, MAY YOU GET BETTER EXPERIENCE IN YOUR WORK, AND MAY THE RIGHT PEOPLE STILL STAY BY YOUR SIDE.</p>
+            <p>I LOVE YOU MORE THAN WORDS CAN CAPTURE.</p>
+            <p>HAPPY NEW YEAR !</p>
             <div style="color: #b33d26; font-size: 30px; margin-top: 15px;">❤️</div>
-            <div style="margin-top: 20px; font-size: 9px; color: #864c24;">- From: inori</div>
+            <div style="margin-top: 20px; font-size: 8px; color: #864c24;">- From: inori</div>
         </div>
     </div>
 
@@ -143,23 +153,31 @@
         let reallyCount = 0;
 
         function handleNo() {
-            reallyCount++;
-            const mainQ = document.getElementById('mainQuestion');
-            const yesBtn = document.getElementById('yesBtn');
-            const noBtn = document.getElementById('noBtn');
+            if (reallyCount < 5) {
+                reallyCount++;
+                const mainQ = document.getElementById('mainQuestion');
+                const yesBtn = document.getElementById('yesBtn');
+                const noBtn = document.getElementById('noBtn');
 
-            let reallyText = "";
-            for(let i = 0; i < reallyCount; i++) {
-                reallyText += "really ";
+                let reallyText = "";
+                for(let i = 0; i < reallyCount; i++) {
+                    reallyText += "really ";
+                }
+                mainQ.innerText = `Are you ${reallyText}sure?`;
+
+                // Grow the Yes button
+                scale += 1.5;
+                yesBtn.style.left = "50%";
+                yesBtn.style.transform = `translateX(-50%) scale(${scale})`;
+                
+                // Gradually hide the No button
+                noBtn.style.opacity = Math.max(0, 1 - (reallyCount * 0.2));
             }
-            mainQ.innerText = `Are you ${reallyText}sure?`;
-
-            scale += 1.4;
-            yesBtn.style.left = "50%";
-            yesBtn.style.transform = `translateX(-50%) scale(${scale})`;
             
-            noBtn.style.opacity = Math.max(0, 1 - (reallyCount * 0.2));
-            if(scale > 5) noBtn.style.display = "none";
+            // On the 5th click or higher, the No button disappears entirely
+            if (reallyCount >= 5) {
+                document.getElementById('noBtn').style.display = "none";
+            }
         }
 
         function startLoading() {
