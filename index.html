@@ -14,8 +14,8 @@
         }
 
         body {
-            /* High-quality pixel art landscape */
-            background: url('https://wallpaperaccess.com/full/3591275.png');
+            /* Using a high-quality Stardew exterior background */
+            background: url('https://wallpapercave.com/wp/wp6651817.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -29,12 +29,12 @@
             color: #3e1b00;
         }
 
-        /* Overlay to make the content box stand out against the background */
+        /* Dark overlay to make the tan box stand out */
         body::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.3);
             z-index: 1;
         }
 
@@ -88,7 +88,7 @@
 
         .hidden { display: none !important; }
 
-        /* The Secret Note with Brown Dashed Border */
+        /* The Secret Note with requested Brown Border */
         .secret-note {
             background: #fff6d5;
             padding: 25px;
@@ -99,14 +99,6 @@
             color: #4a2c10;
         }
 
-        .pixel-loader {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #fff;
-            border-top: 4px solid var(--sv-gold);
-            animation: spin 0.8s infinite linear;
-            margin: auto;
-        }
         @keyframes spin { from {transform: rotate(0deg);} to {transform: rotate(360deg);} }
     </style>
 </head>
@@ -123,8 +115,8 @@
     </div>
 
     <div id="loadingScreen" class="game-container hidden">
-        <div class="pixel-loader"></div>
-        <p style="margin-top: 15px; font-size: 10px;">READING SECRET NOTE...</p>
+        <div style="width: 40px; height: 40px; border: 4px solid #fff; border-top: 4px solid var(--sv-gold); animation: spin 0.8s infinite linear; margin: auto;"></div>
+        <p style="margin-top: 15px; font-size: 10px;">READING NOTE...</p>
     </div>
 
     <div id="screen2" class="game-container hidden">
@@ -158,12 +150,10 @@
                 }
                 mainQ.innerText = `Are you ${reallyText}sure?`;
 
-                // Grow Yes button and move it towards center
-                scale += 1.7;
+                scale += 1.8;
                 yesBtn.style.left = "50%";
                 yesBtn.style.transform = `translateX(-50%) scale(${scale})`;
                 
-                // Gradually cover/hide No button
                 noBtn.style.opacity = Math.max(0, 1 - (reallyCount * 0.2));
             }
 
@@ -175,12 +165,10 @@
         function startLoading() {
             document.getElementById('screen1').classList.add('hidden');
             document.getElementById('loadingScreen').classList.remove('hidden');
-            
-            // 2 second loading delay
             setTimeout(() => {
                 document.getElementById('loadingScreen').classList.add('hidden');
                 document.getElementById('screen2').classList.remove('hidden');
-            }, 2000);
+            }, 1500);
         }
     </script>
 </body>
