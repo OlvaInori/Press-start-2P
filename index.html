@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Will You?</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: 'Comic Sans MS', cursive; /* For that cute look */
+            background-color: #ffeef8;
+        }
+        .container { text-align: center; }
+        .buttons { margin-top: 20px; }
+        
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s; /* Makes the growing look smooth */
+        }
+
+        #noBtn {
+            background-color: #888;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1eHBybmZ4NjR3bmZ4NjR3bmZ4NjR3bmZ4NjR3bmZ4NjR3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/3oriO0OEd9QIDdllqo/giphy.gif" width="200">
+        <h1>Will you go out with me?</h1>
+        
+        <div class="buttons">
+            <button id="yesBtn" onclick="celebrate()">Yes</button>
+            <button id="noBtn" onclick="growYes()">No</button>
+        </div>
+    </div>
+
+    <script>
+        let scale = 1;
+
+        function growYes() {
+            scale += 0.5; // Increases size by 50% each click
+            const yesBtn = document.getElementById('yesBtn');
+            yesBtn.style.transform = `scale(${scale})`;
+        }
+
+        function celebrate() {
+            document.body.innerHTML = "<h1>Yay! See you then! ❤️</h1><img src='https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1eHBybmZ4NjR3bmZ4NjR3bmZ4NjR3bmZ4NjR3bmZ4NjR3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/l41lTfO7Q7YV6c7zG/giphy.gif'>";
+        }
+    </script>
+</body>
+</html>
