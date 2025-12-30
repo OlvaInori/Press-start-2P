@@ -1,63 +1,144 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Will You?</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Message For You</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            font-family: 'Comic Sans MS', cursive; /* For that cute look */
-            background-color: #ffeef8;
-        }
-        .container { text-align: center; }
-        .buttons { margin-top: 20px; }
-        
-        #yesBtn {
-            background-color: #ff4d6d;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.3s; /* Makes the growing look smooth */
+        :root {
+            --pixel-size: 4px;
+            --soft-blue: #a2d2ff;
+            --pixel-pink: #ffafcc;
+            --pixel-white: #ffffff;
         }
 
-        #noBtn {
-            background-color: #888;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            margin-left: 10px;
+        body {
+            background-color: var(--soft-blue);
+            font-family: 'Press Start 2P', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            color: #444;
+            image-rendering: pixelated;
         }
+
+        /* Moving Pixel Animal Background (Simplified) */
+        .background-elements {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Screen Containers */
+        .game-container {
+            text-align: center;
+            background: white;
+            border: 6px solid #000;
+            padding: 40px;
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.2);
+            max-width: 80%;
+        }
+
+        h1 { font-size: 16px; line-height: 1.6; }
+
+        .pixel-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            padding: 15px;
+            margin: 10px;
+            border: 4px solid #000;
+            cursor: pointer;
+            transition: transform 0.1s;
+            position: relative;
+        }
+
+        #yesBtn { background: #bde0fe; color: #000; }
+        #noBtn { background: #ffc8dd; color: #000; }
+
+        .hidden { display: none; }
+
+        /* The "Phone" Note Style */
+        .note-card {
+            background: #fff;
+            padding: 20px;
+            border: 4px solid #000;
+            text-align: left;
+            font-size: 10px;
+            line-height: 2;
+        }
+
+        .sender { margin-top: 20px; text-align: right; color: #ff4d6d; }
+
+        /* Floating Animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float { animation: float 3s ease-in-out infinite; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1eHBybmZ4NjR3bmZ4NjR3bmZ4NjR3bmZ4NjR3bmZ4NjR3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/3oriO0OEd9QIDdllqo/giphy.gif" width="200">
-        <h1>Will you go out with me?</h1>
+    <div class="background-elements">
+        <marquee scrollamount="5" direction="right" style="position:absolute; top:10%;">🐱</marquee>
+        <marquee scrollamount="3" direction="left" style="position:absolute; top:80%;">🐰</marquee>
+        <marquee scrollamount="4" direction="right" style="position:absolute; top:40%;">🐻</marquee>
+    </div>
+
+    <div id="screen1" class="game-container">
+        <div class="float" style="font-size: 50px;">📟</div>
+        <h1 id="mainQuestion">There's a new message for you,<br>do you want to open?</h1>
         
         <div class="buttons">
-            <button id="yesBtn" onclick="celebrate()">Yes</button>
-            <button id="noBtn" onclick="growYes()">No</button>
+            <button id="yesBtn" class="pixel-btn" onclick="nextStep()">Yes, i'd love to</button>
+            <button id="noBtn" class="pixel-btn" onclick="handleNo()">No thanks, im good</button>
+        </div>
+    </div>
+
+    <div id="screen2" class="game-container hidden">
+        <div style="font-size: 40px; margin-bottom: 20px;">📱</div>
+        <div class="note-card">
+            <p>I LOVE YOU, MY LOVE. IM HAPPY WITH THE DECISION I MADE ON THIS DATE.</p>
+            <p>HAPPY NEW YEAR, YOU ARE MY BEST DECISION I COULD MAKE THIS YEAR.</p>
+            <p>I HOPE WE COULD GOING THRU NEXT YEAR TOGETHER.</p>
+            <p>I LOVE YOU SO MUCH <3</p>
+            <div class="sender">- From: inori</div>
         </div>
     </div>
 
     <script>
         let scale = 1;
+        let isSecondQuestion = false;
 
-        function growYes() {
-            scale += 0.5; // Increases size by 50% each click
-            const yesBtn = document.getElementById('yesBtn');
-            yesBtn.style.transform = `scale(${scale})`;
+        function handleNo() {
+            if (!isSecondQuestion) {
+                // Change the question first
+                document.getElementById('mainQuestion').innerText = "Are you sure?";
+                isSecondQuestion = true;
+            } else {
+                // Then start growing the Yes button
+                scale += 0.6;
+                const yesBtn = document.getElementById('yesBtn');
+                yesBtn.style.transform = `scale(${scale})`;
+                
+                // Move the "No" button slightly to be annoying/funny
+                const noBtn = document.getElementById('noBtn');
+                noBtn.style.transform = `translateX(${Math.random() * 20}px)`;
+            }
         }
 
-        function celebrate() {
-            document.body.innerHTML = "<h1>Yay! See you then! ❤️</h1><img src='https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1eHBybmZ4NjR3bmZ4NjR3bmZ4NjR3bmZ4NjR3bmZ4NjR3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/l41lTfO7Q7YV6c7zG/giphy.gif'>";
+        function nextStep() {
+            // Transition to the phone note
+            document.getElementById('screen1').classList.add('hidden');
+            document.getElementById('screen2').classList.remove('hidden');
+            
+            // Trigger a little "confetti" or effect if you want later!
         }
     </script>
 </body>
