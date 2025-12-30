@@ -131,4 +131,40 @@
         let yesScale = 1;
 
         function handleNo() {
-            if (
+            if (noClicks < 5) {
+                noClicks++;
+                const mainQ = document.getElementById('mainQuestion');
+                const yesBtn = document.getElementById('yesBtn');
+                const noBtn = document.getElementById('noBtn');
+
+                // Add "really" text
+                let reallys = "";
+                for(let i=0; i<noClicks; i++) { reallys += "really "; }
+                mainQ.innerText = `Are you ${reallys}sure?`;
+
+                // Grow Yes button and center it
+                yesScale += 1.6;
+                yesBtn.style.left = "50%";
+                yesBtn.style.transform = `translateX(-50%) scale(${yesScale})`;
+
+                // Fade out No button
+                noBtn.style.opacity = (1 - (noClicks * 0.2));
+                
+                if (noClicks === 5) {
+                    noBtn.style.display = "none";
+                }
+            }
+        }
+
+        function startLoading() {
+            document.getElementById('screen1').classList.add('hidden');
+            document.getElementById('loadingScreen').classList.remove('hidden');
+            
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+                document.getElementById('screen2').classList.remove('hidden');
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
