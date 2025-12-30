@@ -42,28 +42,38 @@
             position: relative;
             background-color: var(--sv-tan);
             border: 6px solid var(--sv-border);
-            padding: 35px 20px;
+            padding: 50px 25px;
             box-shadow: inset -6px -6px 0px #c6893f, inset 6px 6px 0px #ffdb9a, 10px 10px 25px rgba(0,0,0,0.4);
             width: 90%;
-            max-width: 520px;
+            max-width: 550px;
             text-align: center;
             z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 350px;
         }
 
-        h1 { font-size: 10px; line-height: 2; margin-bottom: 30px; min-height: 80px; }
+        /* Bigger Font for the Question */
+        h1 { 
+            font-size: 14px; 
+            line-height: 2.2; 
+            margin-bottom: 50px; 
+            color: #3e1b00;
+        }
 
         .button-wrapper {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 140px;
+            height: 100px;
         }
 
         .pixel-btn {
             font-family: 'Press Start 2P', cursive;
-            font-size: 9px;
-            padding: 15px;
+            font-size: 10px;
+            padding: 18px;
             border: 4px solid var(--sv-border);
             cursor: pointer;
             position: absolute;
@@ -85,12 +95,11 @@
             color: #4a2c10;
         }
 
-        /* Custom Pixel Heart Loader */
         .pixel-heart {
-            font-size: 40px;
+            font-size: 45px;
             display: inline-block;
             animation: pulse 0.8s infinite;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         @keyframes pulse {
@@ -103,7 +112,6 @@
 <body>
 
     <div id="screen1" class="game-container">
-        <div style="font-size: 45px; margin-bottom: 15px;">✉️</div>
         <h1 id="mainQuestion">There's a new message for you,<br>do you want to open?</h1>
         <div class="button-wrapper">
             <button id="yesBtn" class="pixel-btn" onclick="startLoading()">Yes, i'd love to</button>
@@ -113,8 +121,7 @@
 
     <div id="loadingScreen" class="game-container hidden">
         <div class="pixel-heart">❤️</div>
-        <p style="margin-top: 15px; font-size: 10px;">READING SECRET NOTE...</p>
-        <p style="font-size: 7px; color: var(--sv-brown);">DO NOT CLOSE</p>
+        <p style="margin-top: 15px; font-size: 11px;">READING SECRET NOTE...</p>
     </div>
 
     <div id="screen2" class="game-container hidden">
