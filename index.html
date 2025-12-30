@@ -13,12 +13,19 @@
             --sv-gold: #f7d51d;
         }
 
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            /* Your new Sunset Stardew Background */
-            background: url('https://i.pinimg.com/1200x/0a/63/ca/0a63caf7f2c17dd4afe816b98b91ffec.jpg');
+            /* Animated Waterfall GIF Background */
+            background-image: url('https://i.pinimg.com/originals/25/6a/71/256a719da8521be28a95f602925c5aff.gif');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             background-repeat: no-repeat;
+            background-color: #469b32; /* Green fallback so no grey shows */
+            
             font-family: 'Press Start 2P', cursive;
             display: flex;
             justify-content: center;
@@ -29,12 +36,12 @@
             color: #3e1b00;
         }
 
-        /* Subtle overlay to help the text box "pop" */
+        /* Subtle darkening overlay */
         body::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.15);
             z-index: 1;
         }
 
@@ -44,7 +51,7 @@
             border: 6px solid var(--sv-border);
             padding: 35px 20px;
             box-shadow: inset -6px -6px 0px #c6893f, inset 6px 6px 0px #ffdb9a, 10px 10px 25px rgba(0,0,0,0.4);
-            width: 85%;
+            width: 90%;
             max-width: 520px;
             text-align: center;
             z-index: 10;
