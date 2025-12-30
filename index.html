@@ -3,17 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Message For Noa</title>
+    <title>For Noa</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --sky-blue: #70c5ce;
-            --sv-tan: #e8b059;
-            --sv-border: #5a3015;
-        }
-
         body {
-            background-color: var(--sky-blue);
+            background-color: #70c5ce; /* Flappy Sky Blue */
             font-family: 'Press Start 2P', cursive;
             margin: 0;
             display: flex;
@@ -21,106 +15,75 @@
             align-items: center;
             height: 100vh;
             overflow: hidden;
-            color: #3e1b00;
         }
 
-        /* Flappy Background */
-        .bg-layer {
+        .bg-birds {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
             pointer-events: none;
         }
 
-        .bird {
-            display: inline-block;
-            animation: flap 0.4s step-end infinite;
-            font-size: 40px;
-        }
-        @keyframes flap {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* Main Container */
         .game-box {
-            background-color: var(--sv-tan);
-            border: 6px solid var(--sv-border);
+            background-color: #e8b059;
+            border: 6px solid #5a3015;
             padding: 30px 20px;
             width: 85%;
             max-width: 500px;
             text-align: center;
-            box-shadow: 8px 8px 0px rgba(0,0,0,0.2);
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.2);
             z-index: 10;
         }
 
-        h1 { font-size: 10px; line-height: 1.8; min-height: 90px; margin-bottom: 20px; }
+        h1 { font-size: 10px; line-height: 1.8; color: #3e1b00; margin-bottom: 20px; min-height: 90px; }
 
-        /* Button Positioning */
-        .btn-container {
+        .btn-wrap {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 150px;
+            height: 140px;
         }
 
         .pixel-btn {
             font-family: 'Press Start 2P', cursive;
             font-size: 9px;
             padding: 15px;
-            border: 4px solid var(--sv-border);
+            border: 4px solid #5a3015;
             cursor: pointer;
-            position: absolute; /* Allows them to overlap */
+            position: absolute;
             transition: transform 0.2s ease;
         }
 
-        #yesBtn {
-            background: #469b32;
-            color: white;
-            z-index: 100; /* Stays on top */
-            left: 50%;
-            transform: translateX(-110%);
-        }
+        #yesBtn { background: #469b32; color: white; z-index: 100; left: 50%; transform: translateX(-110%); }
+        #noBtn { background: #b33d26; color: white; z-index: 50; left: 50%; transform: translateX(10%); }
 
-        #noBtn {
-            background: #b33d26;
-            color: white;
-            z-index: 50; /* Stays below */
-            left: 50%;
-            transform: translateX(10%);
-        }
-
-        /* Note Screen */
+        /* The Note with a Pink Border so you know it's the NEW code */
         .secret-note {
             background: #fff6d5;
             padding: 20px;
-            border: 3px dashed #864c24;
+            border: 5px solid #ff74a4; /* PINK BORDER - LOOK FOR THIS */
             font-size: 9px;
             line-height: 2.1;
-            text-align: center;
+            color: #4a2c10;
         }
 
         .hidden { display: none !important; }
-
-        @keyframes spin { from {transform: rotate(0deg);} to {transform: rotate(360deg);} }
     </style>
 </head>
 <body>
 
-    <div class="bg-layer">
-        <marquee scrollamount="5" style="position:absolute; top:10%;"><span class="bird">🐤</span></marquee>
-        <marquee scrollamount="3" style="position:absolute; top:30%;"><span class="bird">🐤</span></marquee>
-        <marquee scrollamount="6" style="position:absolute; top:60%;"><span class="bird">🐤</span></marquee>
-        <marquee scrollamount="4" direction="right" style="position:absolute; top:80%;"><span class="bird" style="transform: scaleX(-1);">🐤</span></marquee>
+    <div class="bg-birds">
+        <marquee scrollamount="6" style="position:absolute; top:15%; width:100%;">🐤</marquee>
+        <marquee scrollamount="4" style="position:absolute; top:40%; width:100%;">🐤</marquee>
+        <marquee scrollamount="7" direction="right" style="position:absolute; top:70%; width:100%;">🐤</marquee>
     </div>
 
     <div id="screen1" class="game-box">
         <div style="font-size: 40px; margin-bottom: 10px;">✉️</div>
         <h1 id="mainQuestion">There's a new message for you,<br>do you want to open?</h1>
-        
-        <div class="btn-container">
-            <button id="yesBtn" class="pixel-btn" onclick="showNote()">Yes, i'd love to</button>
+        <div class="btn-wrap">
+            <button id="yesBtn" class="pixel-btn" onclick="openNote()">Yes, i'd love to</button>
             <button id="noBtn" class="pixel-btn" onclick="handleNo()">No thanks, im good</button>
         </div>
     </div>
@@ -134,8 +97,8 @@
             <p>I WISH NEXT YEAR WILL BE MUCH BETTER YEAR THAN BEFORE, MAY YOU GET BETTER RESULTS IN YOUR STUDY, MAY YOU GET BETTER EXPERIENCE IN YOUR WORK, AND MAY THE RIGHT PEOPLE STILL STAY BY YOUR SIDE.</p>
             <p>I LOVE YOU MORE THAN WORDS CAN CAPTURE.</p>
             <p>HAPPY NEW YEAR !</p>
-            <div style="font-size: 24px; margin: 10px 0;">❤️</div>
-            <div style="font-size: 8px; color: #864c24;">- From: inori</div>
+            <div style="font-size: 24px; margin-top: 10px;">❤️</div>
+            <div style="font-size: 8px; color: #864c24; margin-top: 10px;">- From: inori</div>
         </div>
     </div>
 
@@ -150,17 +113,14 @@
                 const yesBtn = document.getElementById('yesBtn');
                 const noBtn = document.getElementById('noBtn');
 
-                // Update text
                 let reallys = "";
                 for(let i=0; i<noClicks; i++) { reallys += "really "; }
                 mainQ.innerText = `Are you ${reallys}sure?`;
 
-                // Grow Yes button and center it
-                yesScale += 1.4;
+                yesScale += 1.5;
                 yesBtn.style.left = "50%";
                 yesBtn.style.transform = `translateX(-50%) scale(${yesScale})`;
 
-                // Fade No button
                 noBtn.style.opacity = (1 - (noClicks * 0.2));
                 
                 if (noClicks === 5) {
@@ -169,7 +129,7 @@
             }
         }
 
-        function showNote() {
+        function openNote() {
             document.getElementById('screen1').classList.add('hidden');
             document.getElementById('screen2').classList.remove('hidden');
         }
