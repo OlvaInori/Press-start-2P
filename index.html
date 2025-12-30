@@ -34,13 +34,14 @@
             pointer-events: none;
         }
 
+        /* Heavy Stardew Container */
         .game-container {
             position: relative;
             background-color: var(--sv-tan);
             border: 6px solid var(--sv-border);
-            padding: 40px 30px;
-            box-shadow: inset -4px -4px 0px #c6893f, inset 4px 4px 0px #ffdb9a;
-            max-width: 550px;
+            padding: 50px 30px;
+            box-shadow: inset -6px -6px 0px #c6893f, inset 6px 6px 0px #ffdb9a, 10px 10px 0px rgba(0,0,0,0.2);
+            max-width: 600px;
             text-align: center;
             z-index: 10;
         }
@@ -48,16 +49,16 @@
         .game-container::after {
             content: '';
             position: absolute;
-            top: -10px; left: -10px; right: -10px; bottom: -10px;
-            border: 2px solid var(--sv-gold);
+            top: -12px; left: -12px; right: -12px; bottom: -12px;
+            border: 4px solid var(--sv-gold);
             pointer-events: none;
         }
 
-        h1 { font-size: 14px; line-height: 1.8; margin-bottom: 40px; }
+        h1 { font-size: 14px; line-height: 2; margin-bottom: 50px; min-height: 60px; }
 
-        .buttons {
+        .button-wrapper {
             position: relative;
-            height: 100px; /* Space for buttons to overlap */
+            height: 150px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -66,111 +67,136 @@
         .pixel-btn {
             font-family: 'Press Start 2P', cursive;
             font-size: 10px;
-            padding: 15px 20px;
+            padding: 15px 25px;
             border: 4px solid var(--sv-border);
             cursor: pointer;
-            transition: transform 0.2s ease-in-out;
-            position: absolute; /* Allows layering */
+            position: absolute;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         #yesBtn { 
-            background: #d9934c; 
+            background: #469b32; /* Stardew Green */
             color: white; 
-            z-index: 2; /* Sits on top */
-            box-shadow: inset -3px -3px 0px #9e5a24;
+            z-index: 10; 
+            box-shadow: inset -4px -4px 0px #2d6620;
         }
 
         #noBtn { 
-            background: #a0a0a0; 
-            color: #444; 
-            z-index: 1; /* Sits behind */
-            transform: translateX(140px); /* Initial separation */
+            background: #b33d26; /* Stardew Red */
+            color: white; 
+            z-index: 5; 
+            box-shadow: inset -4px -4px 0px #7a2a1a;
+            transform: translateX(150px);
         }
 
         .hidden { display: none; }
 
-        /* Centered Secret Note */
+        /* Loading Screen */
+        #loadingScreen {
+            text-align: center;
+            color: white;
+        }
+        .pixel-loader {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #fff;
+            border-top: 4px solid var(--sv-gold);
+            animation: spin 1s steps(8) infinite;
+            margin: 20px auto;
+        }
+
+        /* Secret Note Style */
         .secret-note {
             background: #fff6d5;
-            padding: 30px;
-            border: 2px dashed #864c24;
-            text-align: center; /* Center align text */
-            font-size: 11px;
-            line-height: 2.2;
+            padding: 40px;
+            border: 3px dashed #864c24;
+            text-align: center;
+            font-size: 12px;
+            line-height: 2.5;
             color: #4a2c10;
+            box-shadow: 5px 5px 0px rgba(0,0,0,0.1);
         }
 
-        .sender { 
-            margin-top: 30px; 
-            font-size: 10px;
-            color: #b33d26;
-            text-decoration: underline;
-        }
+        .heart-icon { color: #b33d26; font-size: 24px; margin-top: 20px; }
 
-        .float-icon { 
-            display: inline-block; 
-            animation: float 3s ease-in-out infinite; 
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .float-item { display: inline-block; animation: float 3s ease-in-out infinite; font-size: 40px; margin-bottom: 20px; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
     </style>
 </head>
 <body>
 
     <div class="background-elements">
-        <marquee scrollamount="2" direction="down" style="position:absolute; left:10%; height:100%;">🍎</marquee>
-        <marquee scrollamount="3" direction="down" style="position:absolute; left:35%; height:100%;">🐔</marquee>
-        <marquee scrollamount="2" direction="down" style="position:absolute; left:65%; height:100%;">🌻</marquee>
+        <marquee scrollamount="2" direction="down" style="position:absolute; left:5%; height:100%;">🌽</marquee>
+        <marquee scrollamount="3" direction="down" style="position:absolute; left:25%; height:100%;">🐔</marquee>
+        <marquee scrollamount="2" direction="down" style="position:absolute; left:70%; height:100%;">🌸</marquee>
         <marquee scrollamount="4" direction="down" style="position:absolute; left:90%; height:100%;">🐮</marquee>
     </div>
 
     <div id="screen1" class="game-container">
-        <div class="float-icon">✉️</div>
+        <div class="float-item">📟</div>
         <h1 id="mainQuestion">There's a new message for you,<br>do you want to open?</h1>
         
-        <div class="buttons">
-            <button id="yesBtn" class="pixel-btn" onclick="nextStep()">Yes, i'd love to</button>
+        <div class="button-wrapper">
+            <button id="yesBtn" class="pixel-btn" onclick="startLoading()">Yes, i'd love to</button>
             <button id="noBtn" class="pixel-btn" onclick="handleNo()">No thanks, im good</button>
         </div>
     </div>
 
+    <div id="loadingScreen" class="hidden">
+        <div class="pixel-loader"></div>
+        <p>READING SECRET NOTE...</p>
+    </div>
+
     <div id="screen2" class="game-container hidden">
-        <div class="float-icon">💖</div>
         <div class="secret-note">
             <p>I LOVE YOU, MY LOVE. IM HAPPY WITH THE DECISION I MADE ON THIS DATE.</p>
             <p>HAPPY NEW YEAR, YOU ARE MY BEST DECISION I COULD MAKE THIS YEAR.</p>
             <p>I HOPE WE COULD GOING THRU NEXT YEAR TOGETHER.</p>
             <p>I LOVE YOU SO MUCH <3</p>
-            <div class="sender">- From: inori</div>
+            <div class="heart-icon">❤️</div>
+            <div style="margin-top:20px; font-size:10px;">- From: inori</div>
         </div>
     </div>
 
     <script>
         let scale = 1;
-        let isSecondQuestion = false;
+        let reallyCount = 0;
 
         function handleNo() {
-            const yesBtn = document.getElementById('yesBtn');
+            reallyCount++;
             const mainQ = document.getElementById('mainQuestion');
+            const yesBtn = document.getElementById('yesBtn');
             
-            if (!isSecondQuestion) {
-                mainQ.innerText = "Are you sure?";
-                isSecondQuestion = true;
-            } else {
-                scale += 0.5;
-                // Grows the Yes button and keeps it centered
-                yesBtn.style.transform = `scale(${scale})`;
+            // Generate the "Are you really... sure?" string
+            let reallyText = "";
+            for(let i = 0; i < reallyCount; i++) {
+                reallyText += "really ";
             }
+            mainQ.innerText = `Are you ${reallyText}sure?`;
+
+            // Grow Yes button
+            scale += 0.6;
+            yesBtn.style.transform = `scale(${scale})`;
+            
+            // Move No button slightly to ensure it gets covered centered
+            const noBtn = document.getElementById('noBtn');
+            noBtn.style.transform = `translateX(150px) scale(${1 - (reallyCount * 0.1)})`;
+            if (scale > 5) noBtn.style.display = 'none'; // Fully hidden after enough clicks
         }
 
-        function nextStep() {
+        function startLoading() {
+            // Hide Question
             document.getElementById('screen1').classList.add('hidden');
-            document.getElementById('screen2').classList.remove('hidden');
+            // Show Loading
+            document.getElementById('loadingScreen').classList.remove('hidden');
+            
+            // After 2 seconds, show the note
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+                document.getElementById('screen2').classList.remove('hidden');
+            }, 2000);
         }
     </script>
 </body>
